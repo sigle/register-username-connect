@@ -1,13 +1,49 @@
 import { useState } from "react";
 import type { NextPage } from "next";
+import {
+  validateSubdomainFormat,
+  IdentityNameValidityError,
+} from "@stacks/keychain";
 import styles from "../styles/Home.module.css";
+
+const identityNameLengthError =
+  "Your username should be at least 8 characters, with a maximum of 37 characters.";
+const identityNameIllegalCharError =
+  "You can only use lowercase letters (a–z), numbers (0–9), and underscores (_).";
+const identityNameUnavailableError = "This username is not available.";
+const errorTextMap = {
+  [IdentityNameValidityError.MINIMUM_LENGTH]: identityNameLengthError,
+  [IdentityNameValidityError.MAXIMUM_LENGTH]: identityNameLengthError,
+  [IdentityNameValidityError.ILLEGAL_CHARACTER]: identityNameIllegalCharError,
+  [IdentityNameValidityError.UNAVAILABLE]: identityNameUnavailableError,
+};
+
+const registrarUrl = "https://registrar.stacks.co";
+const subdomain = "id.stx";
+
+const validateSubdomainAvailability = async (
+  name: string,
+  subdomain: string
+) => {
+  try {
+    const url = `${registrarUrl}/v1/names/${name.toLowerCase()}.${subdomain}`;
+    const resp = await fetch(url);
+    const data = await resp.json();
+    if (data.status !== "available") {
+      return IdentityNameValidityError.UNAVAILABLE;
+    }
+    return null;
+  } catch (error) {
+    return IdentityNameValidityError.UNAVAILABLE;
+  }
+};
 
 const Home: NextPage = () => {
   const [secretKey, setSecretKey] = useState("");
   const [username, setUsername] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMessage(null);
 
@@ -22,6 +58,15 @@ const Home: NextPage = () => {
 
     if (username === "") {
       setErrorMessage("Username is required");
+      return;
+    }
+
+    const validityError = await validateSubdomainAvailability(
+      username,
+      subdomain
+    );
+    if (validityError !== null) {
+      setErrorMessage(errorTextMap[validityError]);
       return;
     }
   };
