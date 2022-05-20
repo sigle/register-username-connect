@@ -1,0 +1,42 @@
+.container {
+  margin: 0 auto;
+  padding: 0 2rem;
+  width: 500px;
+  max-width: 100%;
+}
+
+.logo {
+  margin-top: 40px;
+  width: 100px;
+}
+
+.description {
+  color: #2f2f2f;
+  font-size: 14px;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 100px;;
+}
+
+.input {
+  width: 100%;
+}
+
+.submit_container {
+  padding: 1rem 0;
+}
+
+.submit {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background-color: #DA3A00;
+  color: #fcfcfc;
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+}
