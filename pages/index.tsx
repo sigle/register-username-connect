@@ -73,7 +73,7 @@ const Home: NextPage = () => {
 
   return (
     <div className={styles.container}>
-      <img className={styles.logo} src="/logo.png" />
+      <img className={styles.logo} src="/logo.png" alt="Logo" />
       <h1>Recover username</h1>
 
       <p className={styles.description}>
@@ -91,6 +91,7 @@ const Home: NextPage = () => {
         <a
           href="https://github.com/sigle/register-username-connect"
           target="_blank"
+          rel="noreferrer"
         >
           open source
         </a>{" "}
