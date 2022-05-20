@@ -73,9 +73,32 @@ const Home: NextPage = () => {
 
   return (
     <div className={styles.container}>
-      <h1>Register username</h1>
-      <p>Enter your 12 words secret key</p>
+      <img className={styles.logo} src="/logo.png" />
+      <h1>Recover username</h1>
+
+      <p className={styles.description}>
+        When you pick a username on Sigle, the username is registered on-chain
+        (which is an async operation). A transaction is sent to the Stacks
+        blockchain and this transaction may succeed in 10 minutes or fail in 3
+        days. If the transaction failed, the username was not registered and you
+        have to register it again.
+      </p>
+
+      <p className={styles.description}>
+        To fix the issue, you need to re-register the same username for your
+        account. To do this please enter your <b>12 words</b> seed phrase and
+        your username below. The code is{" "}
+        <a
+          href="https://github.com/sigle/register-username-connect"
+          target="_blank"
+        >
+          open source
+        </a>{" "}
+        and you can run it locally if you wish.
+      </p>
+
       <form onSubmit={handleSubmit}>
+        <p>Enter your 12 words secret key</p>
         <textarea
           className={styles.textarea}
           placeholder="Secret key"
@@ -96,7 +119,9 @@ const Home: NextPage = () => {
         {errorMessage ? <p className={styles.error}>{errorMessage}</p> : null}
 
         <div className={styles.submit_container}>
-          <button type="submit">Submit</button>
+          <button className={styles.submit} type="submit">
+            Submit
+          </button>
         </div>
       </form>
     </div>
