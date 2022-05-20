@@ -2,3 +2,19 @@
   padding: 0 2rem;
 }
 
+.textarea {
+  min-width: 300px;
+  min-height: 100px;;
+}
+
+.input {
+  min-width: 300px;
+}
+
+.submit_container {
+  padding: 1rem 0;
+}
+
+.error {
+  color: red;
+}
